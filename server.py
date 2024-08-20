@@ -1,3 +1,4 @@
+"""Questo modulo definisce il server Flask per l'applicazione di verifica emozioni"""
 from flask import Flask, render_template, request
 from EmotionDetection.emotion_detection import emotion_detector
 
@@ -5,6 +6,7 @@ app = Flask("Emotion Detector")
 
 @app.route("/emotionDetector")
 def emot_analyzer():
+    """ Funzione di controllo che richiama la funzione  emotion_detector e gestisce l'output"""
     # Retrieve the text to analyze from the request arguments
     text_to_analyze = request.args.get('textToAnalyze')
     # Pass the text to the emotion_detector function and store the response
@@ -16,14 +18,18 @@ def emot_analyzer():
     joy_score=response['joy']
     sadness_score=response['sadness']
     dominant_emotion=response['dominant_emotion']
-    if dominant_emotion == None:
+    if dominant_emotion is None:
         output_string = "Invalid text! Please try again!."
-    else : 
-        output_string = f"For the given statement, the system response is 'anger': {anger_score}, 'disgust': {disgust_score}, 'fear': {fear_score}, 'joy': {joy_score}, 'sadness': {sadness_score}. The dominant emotion is {dominant_emotion}."
+    else :
+        output_string1 = f"For the given statement, the system response is 'anger': {anger_score}"
+        output_string2 = f", 'disgust': {disgust_score}, 'fear': {fear_score}, 'joy': {joy_score},"
+        output_string3 = f" 'sadness': {sadness_score}. The dominant emotion is {dominant_emotion}."
+        output_string = output_string1 + output_string2 + output_string3
     return output_string
 
 @app.route("/")
 def render_index_page():
+    """ Funzione di reindirizzamento alla pagina iniziale"""
     return render_template('index.html')
 
 if __name__ == "__main__":
