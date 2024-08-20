@@ -12,4 +12,32 @@ def emotion_detector(text_to_analyze):
     emotionMentions=formatted_response['emotionPredictions'][0]['emotionMentions']
     #print (emotionMentions)
     textToReturn=emotionMentions[0]['span']['text']
-    return textToReturn
+    emotionList=formatted_response['emotionPredictions'][0]['emotion']
+    anger_score=emotionList['anger']
+    disgust_score=emotionList['disgust']
+    fear_score=emotionList['fear']
+    joy_score=emotionList['joy']
+    sadness_score=emotionList['sadness']
+    #Cerca il massimo
+    dominant_emotion='anger'
+    dominant_value=anger_score
+    if (disgust_score > dominant_value):
+        dominant_value = disgust_score
+        dominant_emotion = 'disgust'
+    if (fear_score > dominant_value):
+        dominant_value = fear_score
+        dominant_emotion = 'fear'
+    if (joy_score > dominant_value):
+        dominant_value = joy_score
+        dominant_emotion = 'joy'
+    if (sadness_score > dominant_value):
+        dominant_value = sadness_score
+        dominant_emotion = 'sadness'
+    return {
+        'anger': anger_score, 
+        'disgust': disgust_score, 
+        'fear': fear_score, 
+        'joy': joy_score, 
+        'sadness': sadness_score, 
+        'dominant_emotion': dominant_emotion
+        }
