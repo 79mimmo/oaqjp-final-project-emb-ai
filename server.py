@@ -16,7 +16,10 @@ def emot_analyzer():
     joy_score=response['joy']
     sadness_score=response['sadness']
     dominant_emotion=response['dominant_emotion']
-    output_string = f"For the given statement, the system response is 'anger': {anger_score}, 'disgust': {disgust_score}, 'fear': {fear_score}, 'joy': {joy_score}, 'sadness': {sadness_score}. The dominant emotion is {dominant_emotion}."
+    if dominant_emotion == None:
+        output_string = "Invalid text! Please try again!."
+    else : 
+        output_string = f"For the given statement, the system response is 'anger': {anger_score}, 'disgust': {disgust_score}, 'fear': {fear_score}, 'joy': {joy_score}, 'sadness': {sadness_score}. The dominant emotion is {dominant_emotion}."
     return output_string
 
 @app.route("/")
